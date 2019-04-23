@@ -1,0 +1,17 @@
+- name: install apache and php
+  apt:
+    name: ['apache2', 'php7.2', 'php7.2-mysql']
+
+- name: update default Apache site
+  template: 
+    src: "apache2.conf.j2"
+    dest: "/etc/apache2/sites-available/000-default.conf"
+  notify:
+    - restart apache2
+
+- name: update hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} {{ vhost_servername }}"
+  notify:
+    - restart apache2

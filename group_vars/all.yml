@@ -1,0 +1,8 @@
+vhost_servername: wp
+
+wp_mysql_db: wordpress
+wp_mysql_user: wordpress
+wp_mysql_password: randompassword
+wp_mysql_host: 10.0.0.15
+
+app_dir: /srv/app

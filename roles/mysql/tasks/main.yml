@@ -1,0 +1,20 @@
+- name: install mysql
+  apt:
+    name: ['mysql-server', 'python-mysqldb']
+
+- name: create mysql database
+  mysql_db: name={{ wp_mysql_db }} state=present
+
+- name: create mysql user
+  mysql_user: 
+    name={{ wp_mysql_user }} 
+    password={{ wp_mysql_password }} 
+    priv=*.*:ALL
+    host=%
+
+- name: edit mysql config file and restart mysql
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address.*$'
+    line: '# bind-address          = 0.0.0.0'
+  notify: restart mysql
